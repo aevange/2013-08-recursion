@@ -26,7 +26,12 @@ var stringifyJSON = function (obj) {
 		text += "]";
 	} else if (obj instanceof Object) {
 		text += "{";
+		var notFirst = 0;
 		for (var prop in obj){
+			if (prop == 'undefined') {return "{}";}	//this can't be right
+			if(notFirst) {
+				text += ",";
+			}
 			text += '"';
 			text += prop;
 			text += '":';
