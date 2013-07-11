@@ -24,7 +24,17 @@ var stringifyJSON = function (obj) {
 			}
 		}
 		text += "]";
+	} else if (obj instanceof Object) {
+		text += "{";
+		for (var prop in obj){
+			text += '"';
+			text += prop;
+			text += '":';
+			text += stringifyJSON(obj[prop]);
+			notFirst++;
+		}
+		text += "}";
 	}
-	
+
 	return text;
 };
