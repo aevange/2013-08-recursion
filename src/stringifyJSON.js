@@ -13,5 +13,18 @@ var stringifyJSON = function (obj) {
 	} else if (obj == null){
 		text = "null";
 	}
+
+	if (obj instanceof Array) {
+		var length = obj.length;
+		text += "[";
+		for (var i = 0; i < length; i++) {
+			text += stringifyJSON(obj[i]);
+			if(i < length - 1) {
+				text += ","
+			}
+		}
+		text += "]";
+	}
+	
 	return text;
 };
