@@ -14,6 +14,10 @@ var getElementsByClassName = function (className, nodeParameter) {
 		if(list && list.contains(className)){
 			returnNodes.push(childNodes[i]);
 		}
+		var grandchildNode =	getElementsByClassName(className, childNodes[i]);
+		for(var j=0;j<grandchildNode.length;j++){
+			returnNodes.push(grandchildNode[j]);
+		}
 	}
 	return returnNodes;
 };
