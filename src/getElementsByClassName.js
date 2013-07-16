@@ -4,6 +4,16 @@
 // };
 
 // But in stead we're going to implement it from scratch:
-var getElementsByClassName = function (className) {
-  // your code here
+var getElementsByClassName = function (className, nodeParameter) {
+	var returnNodes = [];
+	var currentNode = (nodeParameter)?nodeParameter:document.body;
+	var childNodes = currentNode.childNodes;
+	var length = childNodes.length;
+	for (var i=0;i<length;i++) {
+		var list = childNodes[i].classList;
+		if(list && list.contains(className)){
+			returnNodes.push(childNodes[i]);
+		}
+	}
+	return returnNodes;
 };
