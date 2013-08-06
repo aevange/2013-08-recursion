@@ -11,44 +11,30 @@ var stringifyJSON = function (obj) {
 			type = 'null';
 		}
 	}
-	
-	var text = "";
-	if (typeof obj === 'number' || typeof obj === 'boolean') {
-		text += obj;
-	} else if (typeof obj === 'string') {
-		text += '"';
-		text += obj;
-		text += '"';
-	} else if (obj == null){
-		text = "null";
-	}
 
-	if (obj instanceof Array) {
-		var length = obj.length;
-		text += "[";
-		for (var i = 0; i < length; i++) {
-			text += stringifyJSON(obj[i]);
-			if(i < length - 1) {
-				text += ","
-			}
-		}
-		text += "]";
-	} else if (obj instanceof Object) {
-		text += "{";
-		var notFirst = 0;
-		for (var prop in obj){
-			if (prop == 'undefined') {return "{}";}	//this can't be right
-			if(notFirst) {
-				text += ",";
-			}
-			text += '"';
-			text += prop;
-			text += '":';
-			text += stringifyJSON(obj[prop]);
-			notFirst++;
-		}
-		text += "}";
-	}
-
-	return text;
+	switch(type) {
+		case 'string':
+		  return '"' + obj + '"';
+		case 'number':
+		  return obj + '';
+		case 'boolean':
+		  return obj + '';
+		case 'undefined':
+		  return '';
+		case 'array':
+		  return "[" + _.map(obj, stringifyJSON).join(",") + "]";
+		case 'object':
+		  var resultArray = [];
+		  _.each(obj, function(val, key) {
+		  	var valString = stringifyJSON(val);
+		  	if(valString != '') {
+		  		resultArray.push(stringifyJSON(key) + ':' + valString);
+		  	}
+		  });
+		  return "{" + resultArray.join(",") + "}";
+		case 'null':
+		  return 'null';
+		case 'function':
+		  return '';
+    }
 };
