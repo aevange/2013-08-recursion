@@ -3,6 +3,15 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function (obj) {
+	var type = typeof obj;
+	if (type === 'object') {
+		if(_.isArray(obj)) {
+			type = 'array';
+		} else if (obj === null) {
+			type = 'null';
+		}
+	}
+	
 	var text = "";
 	if (typeof obj === 'number' || typeof obj === 'boolean') {
 		text += obj;
